@@ -1,0 +1,29 @@
+{
+  "universities": {
+    "[name]": {
+      "degrees": ["name"],
+      "courses": {
+        "[name]": {
+          "weight": {
+            "exam": "",
+            "coursework": ""
+          },
+          "lectures": "",
+          "examDate": "",
+          "tutorials": "",
+          "startDate": "",
+          "coursework": [
+            {
+              "name": "",
+              "deadline": "",
+              "weight": ""
+            }
+          ],
+          "endDate": ""
+        },
+        "[name]": {...}
+      }
+    },
+    "[name]": {...}
+  }
+}

@@ -1,0 +1,82 @@
+version: '3.3'
+services:
+
+  db:
+    image: "mongo"
+    volumes:
+      - type: volume
+        source: dbdata
+        target: /data/db
+
+  graphdb:
+    image: "neo4j"
+    volumes:
+      - type: volume
+        source: graphdbdata
+        target: /data
+    ports:
+      - "7474:7474"
+      - "7473:7473"
+      - "7687:7687"
+
+  es:
+    labels:
+      com.progress.service: "es"
+      com.progress.description: "For searching and indexing logs"
+    image: elasticsearch:6.8.1
+    volumes:
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - type: volume
+        source: esdata
+        target: /usr/share/elasticsearch/data/
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  logstash:
+    labels:
+      com.progress.service: "logstash"
+      com.progress.description: "For logging data"
+    image: logstash:6.8.1
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    depends_on:
+      - es
+    ports:
+      - "5959:5959"
+      - "9600:9600"
+
+  kibana:
+    labels:
+      com.progress.service: "kibana"
+      com.progress.description: "Data visualisation and for log aggregation"
+    image: kibana:6.8.1
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://es:9200
+    depends_on:
+      - es
+
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/progressapi
+    depends_on:
+      - db
+      - graphdb
+      - es
+      - kibana
+      - logstash
+    environment:
+      - LOGSTASH_HOST=logstash
+    expose:
+      - "5959"
+
+volumes:
+  dbdata:
+  graphdbdata:
+  esdata:

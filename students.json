@@ -1,0 +1,23 @@
+{
+  "id": {
+    "name": "",
+    "degree": "",
+    "type": "",
+    "year": [
+      {
+        "[course]": {
+          "assessment": [
+            {
+              "name": "",
+              "grade": ""
+            }
+          ]
+        }
+      },
+      {
+        "[course]" : {...}
+      }
+    ]
+  },
+  "id": {...}
+}
