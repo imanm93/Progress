@@ -24,6 +24,7 @@ class DefaultConfig(BaseConfig):
     # Connection to Localhost
     DB_URI = "mongodb://localhost:27017/"
 
+    # TODO: Implement more secure secret key
     SECRET_KEY = "development_key"
 
 

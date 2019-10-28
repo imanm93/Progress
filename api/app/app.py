@@ -8,7 +8,7 @@ import logstash
 
 from . import config as Config
 from .common import constants as COMMON_CONSTANTS
-from .api import schools, universities
+from .api import institution
 
 # For import
 __all__ = ['create_app']
@@ -25,8 +25,7 @@ SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
 )
 
 DEFAULT_BLUEPRINTS = [
-    schools,
-    universities
+    institution
 ]
 
 def create_app(config=None, app_name=None, blueprints=None):
